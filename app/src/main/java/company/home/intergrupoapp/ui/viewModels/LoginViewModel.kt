@@ -1,31 +1,32 @@
 package company.home.intergrupoapp.ui.viewModels
 
-import android.arch.lifecycle.ViewModel
 import android.content.Context
 import android.databinding.ObservableField
 import company.home.intergrupoapp.api.controllers.LoginController
 import company.home.intergrupoapp.models.USER_KEY
 import company.home.intergrupoapp.models.UserModel
-import company.home.intergrupoapp.utils.ErrorHelper
 import company.home.intergrupoapp.utils.StringValidationHelper
 import company.home.intergrupoapp.utils.localStorage.SharedPreferencesHelper
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.subjects.BehaviorSubject
 
-class LoginViewModel(context: Context): ViewModel() {
+class LoginViewModel(context: Context): BaseViewModel(context) {
 
     var email = ObservableField<String>()
     var password = ObservableField<String>()
 
     private val preferences= SharedPreferencesHelper.instance
-    var onCheckLogin = PublishSubject.create<Boolean>()
+    private var onCheckLogin = BehaviorSubject.createDefault(false)
 
-    private val errorHelper = ErrorHelper(context)
     private val stringHelper = StringValidationHelper()
     private var loginController = LoginController()
 
     fun onCreate() {
         val userModel = preferences.restoreObject(UserModel::class.java, USER_KEY) as UserModel?
         onCheckLogin.onNext(userModel?.let { it.token.isNotEmpty() }?: false)
+        email.set("directo@directo.com")
+        password.set("directo123")
     }
 
     fun onClickLoginButton(){
@@ -40,11 +41,17 @@ class LoginViewModel(context: Context): ViewModel() {
     }
 
     private fun doLogin(email: String, password:String){
-        loginController.signIn(email, password).subscribe({onCheckLogin.onNext(true)}, this::onLoginError)
+        loginController.signIn(email, password)
+                .doOnSubscribe{showProgressDialog("Iniciando sesion...")}
+                .doFinally(this::hideProgressDialog)
+                .subscribe({onCheckLogin.onNext(true)}, this::onLoginError)
+
     }
 
     private fun onLoginError(throwable: Throwable) {
-        errorHelper.showMessage("Error iniciando sesion: ".plus(throwable.message))
+        errorHelper.showConnectionError(throwable)
     }
+
+    fun onCheckLogin(): Observable<Boolean> = onCheckLogin.observeOn(AndroidSchedulers.mainThread())
 
 }

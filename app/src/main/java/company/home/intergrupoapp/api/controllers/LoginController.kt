@@ -23,7 +23,7 @@ class LoginController {
 
     private fun saveUserData(loginResponse: LoginResponse, email: String, password: String): LoginResponse {
         val preferences= SharedPreferencesHelper.instance
-        val userObject = UserModel(email, password, loginResponse.token)
+        val userObject = UserModel(email, password, loginResponse.authToken)
         preferences.saveObject(userObject, USER_KEY)
         return loginResponse
     }
