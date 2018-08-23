@@ -31,4 +31,7 @@
     <string name="prospect_log_list">Log de Prospectos</string>
     <string name="sign_out">Cerrar Sesión</string>
     <string name="user">Usuario</string>
+    <string name="email">email</string>
+    <string name="password">password</string>
+    <string name="sign_in">Iniciar Sesión</string>
 </resources>

@@ -1,5 +1,5 @@
 package company.home.intergrupoapp.api.models
 
-class LoginResponse {
+import com.google.gson.annotations.SerializedName
 
-}
+data class LoginResponse (@SerializedName("token") var token: String)
