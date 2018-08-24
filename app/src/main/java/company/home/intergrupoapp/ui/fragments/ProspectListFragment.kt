@@ -1,6 +1,7 @@
 package company.home.intergrupoapp.ui.fragments
 
 
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
@@ -37,7 +38,7 @@ class ProspectListFragment : BaseFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentProspectListBinding.inflate(LayoutInflater.from(context))
+        binding = DataBindingUtil.inflate(inflater ,R.layout.fragment_prospect_list,container , false)
         binding.viewModel = viewModel
         return binding.root
     }

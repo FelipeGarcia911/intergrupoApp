@@ -2,9 +2,9 @@ package company.home.intergrupoapp.utils.localStorage
 
 import company.home.intergrupoapp.models.ProspectModel
 
-const val LIST_KEY = "list_key"
-
 class ProspectListLocalStorage {
+
+    val LIST_KEY = "list_key"
 
     private val sharedPreferencesHelper = SharedPreferencesHelper.instance
 

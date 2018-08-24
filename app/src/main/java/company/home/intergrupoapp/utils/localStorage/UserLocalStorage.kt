@@ -2,10 +2,9 @@ package company.home.intergrupoapp.utils.localStorage
 
 import company.home.intergrupoapp.models.UserModel
 
-const val USER_KEY = "user_key"
-
 class UserLocalStorage {
 
+    val USER_KEY = "user_key"
     private val sharedPreferencesHelper = SharedPreferencesHelper.instance
 
     fun getToken(): String {

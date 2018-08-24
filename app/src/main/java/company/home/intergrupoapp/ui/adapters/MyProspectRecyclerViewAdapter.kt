@@ -18,8 +18,7 @@ class MyProspectRecyclerViewAdapter(
     private val mOnClickListener: View.OnClickListener
 
     init {
-        mOnClickListener = View.OnClickListener { v ->
-            val item = v.tag as ProspectModel
+        mOnClickListener = View.OnClickListener { v -> val item = v.tag as ProspectModel
             mListener?.onClick(item)
         }
     }
