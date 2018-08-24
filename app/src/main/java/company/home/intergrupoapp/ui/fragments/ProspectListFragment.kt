@@ -1,99 +1,86 @@
 package company.home.intergrupoapp.ui.fragments
 
-import android.content.Context
+
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.GridLayoutManager
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection
 import company.home.intergrupoapp.R
-import company.home.intergrupoapp.ui.adapters.MyProspectRecyclerViewAdapter
+import company.home.intergrupoapp.databinding.FragmentProspectListBinding
+import company.home.intergrupoapp.models.ProspectModel
+import company.home.intergrupoapp.ui.adapters.MyProspectLogRecyclerViewAdapter
+import company.home.intergrupoapp.ui.viewModels.ProspectListViewModel
 
-import company.home.intergrupoapp.ui.fragments.dummy.DummyContent
-import company.home.intergrupoapp.ui.fragments.dummy.DummyContent.DummyItem
 
-/**
- * A fragment representing a list of Items.
- * Activities containing this fragment MUST implement the
- * [ProspectListFragment.OnListFragmentInteractionListener] interface.
- */
-class ProspectListFragment : Fragment() {
+class ProspectListFragment : BaseFragment(){
 
-    // TODO: Customize parameters
-    private var columnCount = 1
+    private lateinit var binding: FragmentProspectListBinding
+    private lateinit var viewModel: ProspectListViewModel
+    private lateinit var adapter: MyProspectLogRecyclerViewAdapter
+    private var listItems = ArrayList<ProspectModel>()
 
-    private var listener: OnListFragmentInteractionListener? = null
+    override fun onClick(item: Any) {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        context?.let { viewModel = ProspectListViewModel(it) }
+        subscribe()
+    }
 
-        arguments?.let {
-            columnCount = it.getInt(ARG_COLUMN_COUNT)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding = FragmentProspectListBinding.inflate(LayoutInflater.from(context))
+        binding.viewModel = viewModel
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initRecyclerView()
+        initSwipeRefreshWidget()
+    }
+
+    private fun subscribe(){
+        subscriptions.addAll(
+                viewModel.onProspectList().subscribe ( this::onProspectList ),
+                viewModel.observableProgressDialog().subscribe(this::progressDialog)
+        )
+    }
+
+    private fun onProspectList(list: ArrayList<ProspectModel>) {
+        adapter.replaceItems(list)
+        adapter.notifyDataSetChanged()
+        hideSwipeProgressBar()
+    }
+
+    private fun initSwipeRefreshWidget() {
+        binding.swipeLayout.setOnRefreshListener { direction ->
+            if (direction == SwipyRefreshLayoutDirection.TOP) viewModel.onSwipeTop()
+        }
+        activity?.let {
+            binding.swipeLayout.setColorSchemeColors(
+                    ContextCompat.getColor(it, R.color.colorPrimary),
+                    ContextCompat.getColor(it, R.color.colorAccent)
+            )
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_prospect_list, container, false)
-
-        // Set the adapter
-        if (view is RecyclerView) {
-            with(view) {
-                layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
-                }
-                adapter = MyProspectRecyclerViewAdapter(DummyContent.ITEMS, listener)
-            }
-        }
-        return view
+    fun hideSwipeProgressBar() {
+        binding.swipeLayout.isRefreshing = false
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnListFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnListFragmentInteractionListener")
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson
-     * [Communicating with Other Fragments](http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
-    interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onListFragmentInteraction(item: DummyItem?)
+    private fun initRecyclerView() {
+        binding.recyclerView.setHasFixedSize(true)
+        val mLayoutManager = LinearLayoutManager(activity)
+        binding.recyclerView.layoutManager = mLayoutManager
+        adapter = MyProspectLogRecyclerViewAdapter(listItems, this)
+        binding.recyclerView.adapter = adapter
+        viewModel.initListView()
     }
 
     companion object {
-
-        // TODO: Customize parameter argument names
-        const val ARG_COLUMN_COUNT = "column-count"
-
-        // TODO: Customize parameter initialization
-        @JvmStatic
-        fun newInstance(columnCount: Int) =
-                ProspectListFragment().apply {
-                    arguments = Bundle().apply {
-                        putInt(ARG_COLUMN_COUNT, columnCount)
-                    }
-                }
+        const val FRAGMENT_ID = "Prospect List"
     }
 }

@@ -1,5 +1,6 @@
 package company.home.intergrupoapp.ui.activities
 
+import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
@@ -7,6 +8,8 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Pair
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import company.home.intergrupoapp.network.Connection
 import company.home.intergrupoapp.utils.errorHandler.ErrorHelper
 import company.home.intergrupoapp.utils.localStorage.SharedPreferencesHelper
@@ -15,8 +18,8 @@ import io.reactivex.disposables.CompositeDisposable
 
 open class BaseActivity: AppCompatActivity() {
 
-    lateinit var subscriptions: CompositeDisposable
     lateinit var errorHelper: ErrorHelper
+    lateinit var subscriptions: CompositeDisposable
     private var dialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,8 +59,24 @@ open class BaseActivity: AppCompatActivity() {
         dialog?.show()
     }
 
+    fun showMessage(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
     fun hideAlertDialog(){
         dialog?.dismiss()
+    }
+
+    fun hideKeyboard() {
+        val view = this.currentFocus
+        if (view != null) {
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+    }
+
+    fun setToolbarTitle(string: String) {
+        title = string
     }
 
 }

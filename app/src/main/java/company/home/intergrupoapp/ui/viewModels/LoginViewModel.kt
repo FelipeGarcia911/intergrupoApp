@@ -3,10 +3,9 @@ package company.home.intergrupoapp.ui.viewModels
 import android.content.Context
 import android.databinding.ObservableField
 import company.home.intergrupoapp.api.controllers.LoginController
-import company.home.intergrupoapp.models.USER_KEY
-import company.home.intergrupoapp.models.UserModel
 import company.home.intergrupoapp.utils.StringValidationHelper
 import company.home.intergrupoapp.utils.localStorage.SharedPreferencesHelper
+import company.home.intergrupoapp.utils.localStorage.UserLocalStorage
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.BehaviorSubject
@@ -23,8 +22,8 @@ class LoginViewModel(context: Context): BaseViewModel(context) {
     private var loginController = LoginController()
 
     fun onCreate() {
-        val userModel = preferences.restoreObject(UserModel::class.java, USER_KEY) as UserModel?
-        onCheckLogin.onNext(userModel?.let { it.token.isNotEmpty() }?: false)
+        val userLocalStorage = UserLocalStorage()
+        onCheckLogin.onNext(userLocalStorage.getUser()?.token?.isNotEmpty() ?: false)
         email.set("directo@directo.com")
         password.set("directo123")
     }

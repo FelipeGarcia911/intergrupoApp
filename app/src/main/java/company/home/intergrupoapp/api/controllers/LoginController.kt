@@ -2,10 +2,8 @@ package company.home.intergrupoapp.api.controllers
 
 import company.home.intergrupoapp.api.models.LoginResponse
 import company.home.intergrupoapp.api.services.LoginApi
-import company.home.intergrupoapp.models.USER_KEY
-import company.home.intergrupoapp.models.UserModel
 import company.home.intergrupoapp.network.Connection
-import company.home.intergrupoapp.utils.localStorage.SharedPreferencesHelper
+import company.home.intergrupoapp.utils.localStorage.UserLocalStorage
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -22,9 +20,8 @@ class LoginController {
     }
 
     private fun saveUserData(loginResponse: LoginResponse, email: String, password: String): LoginResponse {
-        val preferences= SharedPreferencesHelper.instance
-        val userObject = UserModel(email, password, loginResponse.authToken)
-        preferences.saveObject(userObject, USER_KEY)
+        val userLocalStorage = UserLocalStorage()
+        userLocalStorage.saveUser(email, password, loginResponse.authToken)
         return loginResponse
     }
 }

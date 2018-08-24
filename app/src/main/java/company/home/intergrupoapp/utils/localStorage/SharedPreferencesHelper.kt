@@ -1,11 +1,12 @@
 package company.home.intergrupoapp.utils.localStorage
 
 import android.app.Activity
-import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import com.google.gson.Gson
 import java.util.concurrent.atomic.AtomicBoolean
 
+const val PREFERENCES_NAME = "SHARED_PREFERENCES"
 
 class SharedPreferencesHelper {
 
@@ -13,18 +14,18 @@ class SharedPreferencesHelper {
     private lateinit var sharedPreferences: SharedPreferences
 
     fun initialize(activity: Activity): SharedPreferencesHelper {
-        sharedPreferences = activity.getPreferences(Context.MODE_PRIVATE)
+        sharedPreferences = activity.getSharedPreferences(PREFERENCES_NAME, MODE_PRIVATE)
         return this
     }
 
-    fun write(key: String, value: String) {
+    private fun write(key: String, value: String) {
         val editor = sharedPreferences.edit()
         editor.putString(key, value)
         editor.apply()
     }
 
-    fun read(key: String): String? {
-        return sharedPreferences?.let {  it.getString(key, "")}?.run { "" }
+    private fun read(key: String): String? {
+        return sharedPreferences.getString(key, "")
     }
 
     fun remove(key: String) {
@@ -41,10 +42,6 @@ class SharedPreferencesHelper {
     fun restoreObject(objectClass: Class<*>,key: String): Any? {
         val objectString = read(key)
         return gson.fromJson(objectString, objectClass)
-    }
-
-    private object SingletonHolder {
-        internal val INSTANCE = SharedPreferencesHelper()
     }
 
     companion object {

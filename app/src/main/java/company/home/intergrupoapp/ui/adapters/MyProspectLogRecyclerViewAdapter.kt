@@ -6,44 +6,34 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import company.home.intergrupoapp.R
+import company.home.intergrupoapp.models.ProspectLogModel
+import company.home.intergrupoapp.models.ProspectModel
+import company.home.intergrupoapp.ui.OnClickListener
 
-
-import company.home.intergrupoapp.ui.fragments.ProspectLogFragment.OnListFragmentInteractionListener
-import company.home.intergrupoapp.ui.fragments.dummy.DummyContent.DummyItem
-
-import kotlinx.android.synthetic.main.fragment_prospectlog.view.*
-
-/**
- * [RecyclerView.Adapter] that can display a [DummyItem] and makes a call to the
- * specified [OnListFragmentInteractionListener].
- * TODO: Replace the implementation with code for your data type.
- */
 class MyProspectLogRecyclerViewAdapter(
-        private val mValues: List<DummyItem>,
-        private val mListener: OnListFragmentInteractionListener?)
-    : RecyclerView.Adapter<MyProspectLogRecyclerViewAdapter.ViewHolder>() {
+        private val mValues: ArrayList<ProspectModel>,
+        private val mListener: OnClickListener?) : RecyclerView.Adapter<MyProspectLogRecyclerViewAdapter.ViewHolder>() {
 
     private val mOnClickListener: View.OnClickListener
 
     init {
         mOnClickListener = View.OnClickListener { v ->
-            val item = v.tag as DummyItem
-            // Notify the active callbacks interface (the activity, if the fragment is attached to
-            // one) that an item has been selected.
-            mListener?.onListFragmentInteraction(item)
+            val item = v.tag as ProspectLogModel
+            mListener?.onClick(item)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.fragment_prospectlog, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_prospect_list, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = mValues[position]
-        holder.mIdView.text = item.id
-        holder.mContentView.text = item.content
+        holder.setNames(item.name, item.lastName)
+        holder.setIdentification(item.identification)
+        holder.setTelephone(item.telephone)
+        holder.setStatus(item.status)
 
         with(holder.mView) {
             tag = item
@@ -53,12 +43,40 @@ class MyProspectLogRecyclerViewAdapter(
 
     override fun getItemCount(): Int = mValues.size
 
-    inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-        val mIdView: TextView = mView.item_number
-        val mContentView: TextView = mView.content
+    fun replaceItems(list: ArrayList<ProspectModel>) {
+        mValues.clear()
+        mValues.addAll(list)
+    }
 
-        override fun toString(): String {
-            return super.toString() + " '" + mContentView.text + "'"
+    inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
+        private val names: TextView = mView.findViewById(R.id.textView_names)
+        private val identification: TextView = mView.findViewById(R.id.textView_identification)
+        private val telephone: TextView = mView.findViewById(R.id.textView_phone)
+        private val status: TextView = mView.findViewById(R.id.textView_status)
+
+        fun setNames(name:String, lasName:String){
+            names.text = name.plus(" ").plus(lasName)
         }
+
+        fun setIdentification(string:String){
+            identification.text = string
+        }
+
+        fun setTelephone(string:String){
+            telephone.text = string
+        }
+
+        fun setStatus(string: Int){
+            status.text =  when(string){
+                0 -> "Pending"
+                1 -> "Approved"
+                2 -> "Accepted"
+                3 -> "Rejected"
+                else -> {
+                    "Undefined"
+                }
+            }
+        }
+
     }
 }

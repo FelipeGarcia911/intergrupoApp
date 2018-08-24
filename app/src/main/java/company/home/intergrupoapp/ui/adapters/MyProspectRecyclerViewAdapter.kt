@@ -6,44 +6,33 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import company.home.intergrupoapp.R
-
-
-import company.home.intergrupoapp.ui.fragments.ProspectListFragment.OnListFragmentInteractionListener
-import company.home.intergrupoapp.ui.fragments.dummy.DummyContent.DummyItem
-
+import company.home.intergrupoapp.models.ProspectModel
+import company.home.intergrupoapp.ui.OnClickListener
 import kotlinx.android.synthetic.main.fragment_prospect.view.*
 
-/**
- * [RecyclerView.Adapter] that can display a [DummyItem] and makes a call to the
- * specified [OnListFragmentInteractionListener].
- * TODO: Replace the implementation with code for your data type.
- */
 class MyProspectRecyclerViewAdapter(
-        private val mValues: List<DummyItem>,
-        private val mListener: OnListFragmentInteractionListener?)
+        private val mValues: List<ProspectModel>,
+        private val mListener: OnClickListener?)
     : RecyclerView.Adapter<MyProspectRecyclerViewAdapter.ViewHolder>() {
 
     private val mOnClickListener: View.OnClickListener
 
     init {
         mOnClickListener = View.OnClickListener { v ->
-            val item = v.tag as DummyItem
-            // Notify the active callbacks interface (the activity, if the fragment is attached to
-            // one) that an item has been selected.
-            mListener?.onListFragmentInteraction(item)
+            val item = v.tag as ProspectModel
+            mListener?.onClick(item)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.fragment_prospect, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_prospect, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = mValues[position]
-        holder.mIdView.text = item.id
-        holder.mContentView.text = item.content
+        holder.mIdView.text = item.name
+        holder.mContentView.text = item.lastName
 
         with(holder.mView) {
             tag = item
