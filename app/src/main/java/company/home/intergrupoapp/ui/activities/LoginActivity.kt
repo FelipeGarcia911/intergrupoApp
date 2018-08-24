@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import company.home.intergrupoapp.R
+import company.home.intergrupoapp.base.BaseActivity
 import company.home.intergrupoapp.databinding.ActivityLoginBinding
 import company.home.intergrupoapp.ui.viewModels.LoginViewModel
 import company.home.intergrupoapp.utils.EXTERNAL_STORAGE_PERMISSION

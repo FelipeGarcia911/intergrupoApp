@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection
 import company.home.intergrupoapp.R
+import company.home.intergrupoapp.base.BaseFragment
 import company.home.intergrupoapp.databinding.FragmentProspectListBinding
 import company.home.intergrupoapp.models.ProspectModel
 import company.home.intergrupoapp.ui.adapters.MyProspectLogRecyclerViewAdapter

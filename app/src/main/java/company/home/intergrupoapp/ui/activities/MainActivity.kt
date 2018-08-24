@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Menu
 import android.view.MenuItem
 import company.home.intergrupoapp.R
+import company.home.intergrupoapp.base.BaseActivity
 import company.home.intergrupoapp.ui.fragments.EditProspectFragment
 import company.home.intergrupoapp.ui.fragments.LogFragment
 import company.home.intergrupoapp.ui.fragments.ProspectListFragment

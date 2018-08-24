@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import company.home.intergrupoapp.R
+import company.home.intergrupoapp.base.BaseFragment
 
 class EditProspectFragment : BaseFragment() {
 

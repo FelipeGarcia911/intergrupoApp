@@ -1,4 +1,4 @@
-package company.home.intergrupoapp.ui.activities
+package company.home.intergrupoapp.base
 
 import android.content.Context
 import android.content.pm.PackageManager

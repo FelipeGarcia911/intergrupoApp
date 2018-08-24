@@ -1,4 +1,4 @@
-package company.home.intergrupoapp.ui.viewModels
+package company.home.intergrupoapp.base
 
 import android.arch.lifecycle.ViewModel
 import android.content.Context

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import company.home.intergrupoapp.R
+import company.home.intergrupoapp.base.BaseFragment
 import company.home.intergrupoapp.ui.adapters.MyProspectLogRecyclerViewAdapter
 import company.home.intergrupoapp.ui.viewModels.LogFragmentViewModel
 

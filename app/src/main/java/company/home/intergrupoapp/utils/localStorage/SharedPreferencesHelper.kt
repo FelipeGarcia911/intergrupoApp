@@ -4,7 +4,12 @@ import android.app.Activity
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import com.google.gson.Gson
+import java.lang.reflect.ParameterizedType
+import java.lang.reflect.Type
+import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
+import kotlin.reflect.KClass
+
 
 const val PREFERENCES_NAME = "SHARED_PREFERENCES"
 
@@ -42,6 +47,34 @@ class SharedPreferencesHelper {
     fun restoreObject(objectClass: Class<*>,key: String): Any? {
         val objectString = read(key)
         return gson.fromJson(objectString, objectClass)
+    }
+
+    fun <T: Any> restoreList(kClass: KClass<T>, key: String): Any? {
+        val jsonString = read(key)
+        return jsonString.let {
+            gson.fromJson<List<T>>(it, ListOfSomething(kClass.java))
+        }?: null
+    }
+
+    internal class ListOfSomething<X>(wrapped: Class<X>) : ParameterizedType {
+
+        private val wrapped: Class<*>
+
+        init {
+            this.wrapped = wrapped
+        }
+
+        override fun getActualTypeArguments(): Array<Type> {
+            return arrayOf(wrapped)
+        }
+
+        override fun getRawType(): Type {
+            return ArrayList::class.java
+        }
+
+        override fun getOwnerType(): Type? {
+            return null
+        }
     }
 
     companion object {

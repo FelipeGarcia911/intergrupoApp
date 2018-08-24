@@ -1,4 +1,4 @@
-package company.home.intergrupoapp.ui.fragments
+package company.home.intergrupoapp.base
 
 import android.content.Context
 import android.support.v4.app.Fragment

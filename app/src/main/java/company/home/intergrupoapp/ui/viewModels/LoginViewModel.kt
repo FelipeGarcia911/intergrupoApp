@@ -3,6 +3,7 @@ package company.home.intergrupoapp.ui.viewModels
 import android.content.Context
 import android.databinding.ObservableField
 import company.home.intergrupoapp.api.controllers.LoginController
+import company.home.intergrupoapp.base.BaseViewModel
 import company.home.intergrupoapp.utils.StringValidationHelper
 import company.home.intergrupoapp.utils.localStorage.SharedPreferencesHelper
 import company.home.intergrupoapp.utils.localStorage.UserLocalStorage

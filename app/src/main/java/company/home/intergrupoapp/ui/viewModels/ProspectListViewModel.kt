@@ -2,7 +2,9 @@ package company.home.intergrupoapp.ui.viewModels
 
 import android.content.Context
 import company.home.intergrupoapp.api.controllers.ProspectController
+import company.home.intergrupoapp.base.BaseViewModel
 import company.home.intergrupoapp.models.ProspectModel
+import company.home.intergrupoapp.utils.localStorage.ProspectListLocalStorage
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
@@ -11,10 +13,15 @@ class ProspectListViewModel(context: Context): BaseViewModel(context) {
 
     private var onProspectList = PublishSubject.create<ArrayList<ProspectModel>>()
     private val prospectController = ProspectController()
+    private val listLC = ProspectListLocalStorage()
 
-    private fun getListFromLS() {}
+    private fun getListFromLS() {
+        listLC.getList()
+    }
 
-    private fun saveListToLS(list: ArrayList<ProspectModel>) {}
+    private fun saveListToLS(list: ArrayList<ProspectModel>) {
+        listLC.saveList(list)
+    }
 
     private fun getListFromServer() {
         prospectController.getProspects()
@@ -37,7 +44,7 @@ class ProspectListViewModel(context: Context): BaseViewModel(context) {
     }
 
     fun initListView() {
-        getListFromServer()
+        listLC.getList()?.let { onProspectList.onNext(it) }?: getListFromServer()
     }
 
     fun onSwipeTop() {
