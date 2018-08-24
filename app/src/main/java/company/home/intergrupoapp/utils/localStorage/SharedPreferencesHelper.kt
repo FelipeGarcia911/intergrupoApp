@@ -39,21 +39,21 @@ class SharedPreferencesHelper {
         editor.apply()
     }
 
-    fun saveObject(objects: Any, key: String){
+    fun saveObject(objects: Any, key: String) {
         val objectString = gson.toJson(objects)
         write(key, objectString)
     }
 
-    fun restoreObject(objectClass: Class<*>,key: String): Any? {
+    fun restoreObject(objectClass: Class<*>, key: String): Any? {
         val objectString = read(key)
         return gson.fromJson(objectString, objectClass)
     }
 
-    fun <T: Any> restoreList(kClass: KClass<T>, key: String): Any? {
+    fun <T : Any> restoreList(kClass: KClass<T>, key: String): Any? {
         val jsonString = read(key)
         return jsonString.let {
             gson.fromJson<List<T>>(it, ListOfSomething(kClass.java))
-        }?: null
+        } ?: null
     }
 
     internal class ListOfSomething<X>(wrapped: Class<X>) : ParameterizedType {
@@ -83,7 +83,7 @@ class SharedPreferencesHelper {
         private val initialized = AtomicBoolean()
 
         fun initialize(activity: Activity) {
-            if(!initialized.getAndSet(true)) {
+            if (!initialized.getAndSet(true)) {
                 INSTANCE = SharedPreferencesHelper().initialize(activity)
             }
         }

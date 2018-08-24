@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import company.home.intergrupoapp.R
-import company.home.intergrupoapp.models.ProspectLogModel
 import company.home.intergrupoapp.models.ProspectModel
 import company.home.intergrupoapp.ui.OnClickListener
 
@@ -18,8 +17,7 @@ class MyProspectLogRecyclerViewAdapter(
 
     init {
         mOnClickListener = View.OnClickListener { v ->
-            val item = v.tag as ProspectLogModel
-            mListener?.onClick(item)
+            mListener?.onClick(v.tag)
         }
     }
 
@@ -54,20 +52,20 @@ class MyProspectLogRecyclerViewAdapter(
         private val telephone: TextView = mView.findViewById(R.id.textView_phone)
         private val status: TextView = mView.findViewById(R.id.textView_status)
 
-        fun setNames(name:String, lasName:String){
+        fun setNames(name: String, lasName: String) {
             names.text = name.plus(" ").plus(lasName)
         }
 
-        fun setIdentification(string:String){
+        fun setIdentification(string: String) {
             identification.text = string
         }
 
-        fun setTelephone(string:String){
+        fun setTelephone(string: String) {
             telephone.text = string
         }
 
-        fun setStatus(string: Int){
-            status.text =  when(string){
+        fun setStatus(string: Int) {
+            status.text = when (string) {
                 0 -> "Pending"
                 1 -> "Approved"
                 2 -> "Accepted"

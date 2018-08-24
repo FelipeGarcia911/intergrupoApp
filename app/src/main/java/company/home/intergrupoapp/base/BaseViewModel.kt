@@ -8,7 +8,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.BehaviorSubject
 
-open class BaseViewModel(context: Context): ViewModel() {
+open class BaseViewModel(context: Context) : ViewModel() {
 
     var errorHelper: ErrorHelper = ErrorHelper(context)
 

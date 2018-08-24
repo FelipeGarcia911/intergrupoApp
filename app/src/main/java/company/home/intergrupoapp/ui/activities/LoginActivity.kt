@@ -30,20 +30,20 @@ class LoginActivity : BaseActivity() {
         viewModel.onCreate()
     }
 
-    private fun subscribe(){
+    private fun subscribe() {
         subscriptions.addAll(
                 viewModel.onCheckLogin().filter { it }.subscribe { onLoginSuccess() },
                 viewModel.observableProgressDialog().subscribe(this::progressDialog)
         )
     }
 
-    private fun onLoginSuccess(){
+    private fun onLoginSuccess() {
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        if (requestCode == EXTERNAL_STORAGE_PERMISSION){
+        if (requestCode == EXTERNAL_STORAGE_PERMISSION) {
             if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                 errorHelper.showMessage("Permiso denegado, no se guardaran su datos de sesion")
             }

@@ -12,12 +12,16 @@ import android.view.Menu
 import android.view.MenuItem
 import company.home.intergrupoapp.R
 import company.home.intergrupoapp.base.BaseActivity
+import company.home.intergrupoapp.models.ProspectModel
+import company.home.intergrupoapp.ui.OPEN_DETAILS
+import company.home.intergrupoapp.ui.ProspectDetailEvent
 import company.home.intergrupoapp.ui.fragments.EditProspectFragment
 import company.home.intergrupoapp.ui.fragments.LogFragment
 import company.home.intergrupoapp.ui.fragments.ProspectListFragment
 import company.home.intergrupoapp.ui.viewModels.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import org.greenrobot.eventbus.Subscribe
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -77,28 +81,36 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         return true
     }
 
-    private fun navToProspectList(){
+    @Subscribe
+    fun onMessageEvent(event: ProspectDetailEvent) {
+        when (event.eventType) {
+            OPEN_DETAILS -> navToEditProspect(event.prospectModel)
+            else -> showMessage("Error mostrando detalles")
+        }
+    }
+
+    private fun navToProspectList() {
         currentFragment = ProspectListFragment()
         val fragmentName = ProspectListFragment.FRAGMENT_ID
         executeFragmentTransaction(currentFragment, fragmentName)
         setToolbarTitle(fragmentName)
     }
 
-    private fun navToEditProspect(){
-        currentFragment = EditProspectFragment()
+    private fun navToEditProspect(prospectModel: ProspectModel) {
+        currentFragment = EditProspectFragment.newInstance(prospectModel)
         val fragmentName = EditProspectFragment.FRAGMENT_ID
         executeFragmentTransaction(currentFragment, fragmentName)
         setToolbarTitle(fragmentName)
     }
 
-    private fun navToLogList(){
+    private fun navToLogList() {
         currentFragment = LogFragment()
         val fragmentName = LogFragment.FRAGMENT_ID
         executeFragmentTransaction(currentFragment, fragmentName)
         setToolbarTitle(fragmentName)
     }
 
-    fun logoutAction() {
+    private fun logoutAction() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
         finish()
@@ -114,8 +126,14 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     private fun init() {
+        super.registerEventBus()
         viewModel = MainActivityViewModel()
         fragmentManager = supportFragmentManager
         navToProspectList()
+    }
+
+    override fun onDestroy() {
+        super.unregisterEventBus()
+        super.onDestroy()
     }
 }

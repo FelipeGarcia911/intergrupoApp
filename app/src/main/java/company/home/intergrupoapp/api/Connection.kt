@@ -1,4 +1,4 @@
-package company.home.intergrupoapp.network
+package company.home.intergrupoapp.api
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import company.home.intergrupoapp.utils.URL_SERVER

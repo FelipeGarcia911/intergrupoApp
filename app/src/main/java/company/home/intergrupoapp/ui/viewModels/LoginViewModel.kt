@@ -11,12 +11,12 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.BehaviorSubject
 
-class LoginViewModel(context: Context): BaseViewModel(context) {
+class LoginViewModel(context: Context) : BaseViewModel(context) {
 
     var email = ObservableField<String>()
     var password = ObservableField<String>()
 
-    private val preferences= SharedPreferencesHelper.instance
+    private val preferences = SharedPreferencesHelper.instance
     private var onCheckLogin = BehaviorSubject.createDefault(false)
 
     private val stringHelper = StringValidationHelper()
@@ -29,9 +29,9 @@ class LoginViewModel(context: Context): BaseViewModel(context) {
         password.set("directo123")
     }
 
-    fun onClickLoginButton(){
-        val emailString = email.get()?:""
-        val passwordString = password.get()?:""
+    fun onClickLoginButton() {
+        val emailString = email.get() ?: ""
+        val passwordString = password.get() ?: ""
         when {
             emailString.isEmpty() -> errorHelper.showMessage("Completar el email")
             !stringHelper.isValidEmail(emailString) -> errorHelper.showMessage("Email inválido")
@@ -40,11 +40,11 @@ class LoginViewModel(context: Context): BaseViewModel(context) {
         }
     }
 
-    private fun doLogin(email: String, password:String){
+    private fun doLogin(email: String, password: String) {
         loginController.signIn(email, password)
-                .doOnSubscribe{showProgressDialog("Iniciando sesion...")}
+                .doOnSubscribe { showProgressDialog("Iniciando sesion...") }
                 .doFinally(this::hideProgressDialog)
-                .subscribe({onCheckLogin.onNext(true)}, this::onLoginError)
+                .subscribe({ onCheckLogin.onNext(true) }, this::onLoginError)
 
     }
 

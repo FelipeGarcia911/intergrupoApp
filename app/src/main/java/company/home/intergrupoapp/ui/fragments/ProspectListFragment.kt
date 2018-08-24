@@ -12,18 +12,23 @@ import company.home.intergrupoapp.R
 import company.home.intergrupoapp.base.BaseFragment
 import company.home.intergrupoapp.databinding.FragmentProspectListBinding
 import company.home.intergrupoapp.models.ProspectModel
+import company.home.intergrupoapp.ui.OPEN_DETAILS
+import company.home.intergrupoapp.ui.ProspectDetailEvent
 import company.home.intergrupoapp.ui.adapters.MyProspectLogRecyclerViewAdapter
 import company.home.intergrupoapp.ui.viewModels.ProspectListViewModel
 
 
-class ProspectListFragment : BaseFragment(){
+class ProspectListFragment : BaseFragment() {
 
     private lateinit var binding: FragmentProspectListBinding
     private lateinit var viewModel: ProspectListViewModel
     private lateinit var adapter: MyProspectLogRecyclerViewAdapter
     private var listItems = ArrayList<ProspectModel>()
 
-    override fun onClick(item: Any) {}
+    override fun onClick(item: Any) {
+        val event = ProspectDetailEvent(item as ProspectModel, OPEN_DETAILS)
+        eventBus.post(event)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,9 +48,9 @@ class ProspectListFragment : BaseFragment(){
         initSwipeRefreshWidget()
     }
 
-    private fun subscribe(){
+    private fun subscribe() {
         subscriptions.addAll(
-                viewModel.onProspectList().subscribe ( this::onProspectList ),
+                viewModel.onProspectList().subscribe(this::onProspectList),
                 viewModel.observableProgressDialog().subscribe(this::progressDialog)
         )
     }
@@ -68,7 +73,7 @@ class ProspectListFragment : BaseFragment(){
         }
     }
 
-    fun hideSwipeProgressBar() {
+    private fun hideSwipeProgressBar() {
         binding.swipeLayout.isRefreshing = false
     }
 

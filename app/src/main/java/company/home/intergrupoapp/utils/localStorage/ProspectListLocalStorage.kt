@@ -12,11 +12,11 @@ class ProspectListLocalStorage {
         return sharedPreferencesHelper.restoreList(ProspectModel::class, LIST_KEY) as ArrayList<ProspectModel>?
     }
 
-    fun saveList(list: ArrayList<ProspectModel>){
+    fun saveList(list: ArrayList<ProspectModel>) {
         sharedPreferencesHelper.saveObject(list, LIST_KEY)
     }
 
-    fun removeList(){
+    fun removeList() {
         sharedPreferencesHelper.remove(LIST_KEY)
     }
 

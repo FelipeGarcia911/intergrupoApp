@@ -1,5 +1,7 @@
 package company.home.intergrupoapp.utils.eventBus
 
+import java.util.concurrent.atomic.AtomicBoolean
+
 class GreenRobotEventBus private constructor() : EventBus {
 
     private val eventBus: org.greenrobot.eventbus.EventBus = org.greenrobot.eventbus.EventBus.getDefault()
@@ -21,7 +23,14 @@ class GreenRobotEventBus private constructor() : EventBus {
     }
 
     companion object {
-        val instance: GreenRobotEventBus
-            get() = SingletonHolder.INSTANCE
+        private lateinit var INSTANCE: GreenRobotEventBus
+        val instance: GreenRobotEventBus get() = INSTANCE
+        private val initialized = AtomicBoolean()
+        fun initialize() {
+            if (!initialized.getAndSet(true)) {
+                INSTANCE = GreenRobotEventBus()
+            }
+        }
     }
+
 }

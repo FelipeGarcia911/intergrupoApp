@@ -1,8 +1,8 @@
 package company.home.intergrupoapp.api.controllers
 
+import company.home.intergrupoapp.api.Connection
 import company.home.intergrupoapp.api.services.ProspectApi
 import company.home.intergrupoapp.models.ProspectModel
-import company.home.intergrupoapp.network.Connection
 import company.home.intergrupoapp.utils.localStorage.UserLocalStorage
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers

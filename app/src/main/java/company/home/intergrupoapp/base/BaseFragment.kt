@@ -6,18 +6,19 @@ import android.support.v7.app.AlertDialog
 import android.util.Pair
 import android.widget.Toast
 import company.home.intergrupoapp.ui.OnClickListener
-import company.home.intergrupoapp.utils.errorHandler.ErrorHelper
+import company.home.intergrupoapp.utils.eventBus.GreenRobotEventBus
 import io.reactivex.disposables.CompositeDisposable
 
-open class BaseFragment: Fragment(), OnClickListener {
+open class BaseFragment : Fragment(), OnClickListener {
 
-    lateinit var errorHelper: ErrorHelper
+    lateinit var eventBus: GreenRobotEventBus
     lateinit var subscriptions: CompositeDisposable
     private var dialog: AlertDialog? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         subscriptions = CompositeDisposable()
+        eventBus = GreenRobotEventBus.instance
     }
 
     override fun onDetach() {
@@ -27,13 +28,13 @@ open class BaseFragment: Fragment(), OnClickListener {
 
     override fun onClick(item: Any) {}
 
-    fun progressDialog(pair: Pair<Boolean, String?>){
-        if (pair.first) showAlertDialog("Cargando datos...", pair.second?:"")
+    fun progressDialog(pair: Pair<Boolean, String?>) {
+        if (pair.first) showAlertDialog("Cargando datos...", pair.second ?: "")
         else hideAlertDialog()
     }
 
-    fun showAlertDialog(title: String, message: String){
-        context?.let{
+    fun showAlertDialog(title: String, message: String) {
+        context?.let {
             val builder = AlertDialog.Builder(it)
             builder.setTitle(title)
             builder.setMessage(message)
@@ -46,7 +47,7 @@ open class BaseFragment: Fragment(), OnClickListener {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
-    fun hideAlertDialog(){
+    fun hideAlertDialog() {
         dialog?.dismiss()
     }
 

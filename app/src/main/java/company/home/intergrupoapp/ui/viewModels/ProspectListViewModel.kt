@@ -9,7 +9,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 
-class ProspectListViewModel(context: Context): BaseViewModel(context) {
+class ProspectListViewModel(context: Context) : BaseViewModel(context) {
 
     private var onProspectList = PublishSubject.create<ArrayList<ProspectModel>>()
     private val prospectController = ProspectController()
@@ -44,7 +44,7 @@ class ProspectListViewModel(context: Context): BaseViewModel(context) {
     }
 
     fun initListView() {
-        listLC.getList()?.let { onProspectList.onNext(it) }?: getListFromServer()
+        listLC.getList()?.let { onProspectList.onNext(it) } ?: getListFromServer()
     }
 
     fun onSwipeTop() {

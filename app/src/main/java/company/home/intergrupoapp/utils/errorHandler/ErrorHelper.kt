@@ -10,12 +10,12 @@ const val CONNECTION_ERROR = "Error de conexion"
 
 class ErrorHelper(val context: Context) {
 
-    fun showConnectionError(throwable: Throwable){
+    fun showConnectionError(throwable: Throwable) {
         val errorMessage = getMessageError(throwable)
         showMessage("Error: ".plus(errorMessage))
     }
 
-    fun showMessage(message: String){
+    fun showMessage(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
@@ -27,7 +27,7 @@ class ErrorHelper(val context: Context) {
             if (e is HttpException) {
                 val responseBody = e.response().errorBody()?.string()
                 val errorResponse = Gson().fromJson(responseBody, Error::class.java)
-                error = errorResponse.error?:"-"
+                error = errorResponse.error ?: "-"
             } else if (e is IOException) {
                 error = CONNECTION_ERROR
             }
