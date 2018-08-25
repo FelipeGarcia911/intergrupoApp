@@ -8,8 +8,6 @@
     <string name="action_settings">Settings</string>
 
     <string name="title_activity_splash">SplashActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
@@ -26,7 +24,6 @@
     </string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="prospect_list">Lista de Prospectos</string>
     <string name="prospect_log_list">Log de Prospectos</string>
     <string name="sign_out">Cerrar Sesión</string>
@@ -34,5 +31,6 @@
     <string name="email">email</string>
     <string name="password">password</string>
     <string name="sign_in">Iniciar Sesión</string>
-    <string name="prospect_edit_title">Editar datos del Prospecto</string>
+    <string name="prospect_edit_title">Editar datos del prospecto</string>
+    <string name="disclaimer_nav">Aplicacion de Prueba - Felipe Garcia</string>
 </resources>

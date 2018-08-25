@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="company.home.intergrupoapp.ui.viewModels.ProspectListViewModel" />
+            type="felipe.garcia.testapp.ui.viewModels.ProspectListViewModel" />
     </data>
 
     <FrameLayout

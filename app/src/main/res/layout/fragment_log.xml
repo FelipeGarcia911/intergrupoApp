@@ -2,20 +2,31 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.LogFragment">
     <data>
         <variable
             name="viewModel"
-            type="company.home.intergrupoapp.ui.viewModels.LogFragmentViewModel" />
+            type="felipe.garcia.testapp.ui.viewModels.LogFragmentViewModel" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <TextView
+
+        <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
+            android:id="@+id/swipe_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+            android:layout_height="wrap_content"
+            app:srl_direction="top">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbarSize="2dp"
+                android:scrollbars="vertical" />
+        </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
 
     </FrameLayout>
 </layout>

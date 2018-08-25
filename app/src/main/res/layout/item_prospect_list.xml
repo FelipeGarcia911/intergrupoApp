@@ -3,54 +3,57 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/spacing_normal"
+    android:background="@color/item_color"
+    android:paddingBottom="@dimen/spacing_normal"
+    android:paddingTop="@dimen/spacing_normal">
 
     <TextView
-        android:id="@+id/textView_names"
+        android:id="@+id/textView_date"
         style="@style/Base.TextAppearance.AppCompat.Large"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/spacing_empty"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginEnd="@dimen/spacing_normal"
+        android:layout_marginStart="@dimen/spacing_normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="TextView" />
 
     <TextView
-        android:id="@+id/textView_identification"
+        android:id="@+id/textView_names"
         style="@style/Base.TextAppearance.AppCompat.Small"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/spacing_empty"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/spacing_normal"
+        android:layout_marginTop="@dimen/spacing_normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView_date"
+        app:layout_constraintTop_toBottomOf="@+id/textView_date"
+        tools:text="TextView" />
+
+    <TextView
+        android:id="@+id/textView_lastName"
+        style="@style/Base.TextAppearance.AppCompat.Small"
+        android:layout_width="@dimen/spacing_empty"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/spacing_normal"
+        android:layout_marginTop="@dimen/spacing_normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView_names"
         app:layout_constraintTop_toBottomOf="@+id/textView_names"
         tools:text="TextView" />
 
     <TextView
-        android:id="@+id/textView_phone"
-        style="@style/Base.TextAppearance.AppCompat.Small"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textView_identification"
-        app:layout_constraintTop_toBottomOf="@+id/textView_identification"
-        tools:text="TextView" />
-
-    <TextView
         android:id="@+id/textView_status"
         style="@style/Base.TextAppearance.AppCompat.Small"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/spacing_empty"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/textView_phone"
-        app:layout_constraintStart_toStartOf="@+id/textView_phone"
-        app:layout_constraintTop_toBottomOf="@+id/textView_phone"
+        android:layout_marginTop="@dimen/spacing_normal"
+        app:layout_constraintEnd_toEndOf="@+id/textView_lastName"
+        app:layout_constraintStart_toStartOf="@+id/textView_lastName"
+        app:layout_constraintTop_toBottomOf="@+id/textView_lastName"
         tools:text="TextView" />
 
 </android.support.constraint.ConstraintLayout>
