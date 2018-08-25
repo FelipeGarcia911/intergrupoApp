@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.activities.LoginActivity">
+
     <data>
+
         <variable
             name="viewModel"
             type="felipe.garcia.testapp.ui.viewModels.LoginViewModel" />

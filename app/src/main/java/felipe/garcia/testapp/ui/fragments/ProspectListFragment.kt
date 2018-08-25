@@ -38,7 +38,7 @@ class ProspectListFragment : BaseFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater ,R.layout.fragment_prospect_list,container , false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_prospect_list, container, false)
         binding.viewModel = viewModel
         return binding.root
     }

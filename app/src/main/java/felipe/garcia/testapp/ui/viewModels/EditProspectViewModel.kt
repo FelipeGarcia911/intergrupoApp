@@ -9,7 +9,7 @@ import felipe.garcia.testapp.utils.localStorage.ProspectListLocalStorage
 import felipe.garcia.testapp.utils.localStorage.ProspectLogLocalStorage
 import java.util.*
 
-class EditProspectViewModel(private val prospectModel: ProspectModel, context: Context): BaseViewModel(context) {
+class EditProspectViewModel(private val prospectModel: ProspectModel, context: Context) : BaseViewModel(context) {
 
     var name = ObservableField<String>()
     var lastName = ObservableField<String>()
@@ -25,29 +25,29 @@ class EditProspectViewModel(private val prospectModel: ProspectModel, context: C
         telephone.set(prospectModel.telephone)
     }
 
-    fun onSubmit(){
-        val nameString = name.get()?:""
-        val lastNameString = lastName.get()?:""
-        val telephoneString = telephone.get()?:""
-        when{
-            nameString.isEmpty() ->nameError.set("Nombre invalido")
+    fun onSubmit() {
+        val nameString = name.get() ?: ""
+        val lastNameString = lastName.get() ?: ""
+        val telephoneString = telephone.get() ?: ""
+        when {
+            nameString.isEmpty() -> nameError.set("Nombre invalido")
             lastNameString.isEmpty() -> lastNameError.set("Apellido invalido")
             telephoneString.isEmpty() -> telephoneError.set("Telefono invalido")
-            else ->{
+            else -> {
                 clearErrors()
                 updateProspect(nameString, lastNameString, telephoneString)
                 val isUpdated = updateProspectList()
-                if (isUpdated){
+                if (isUpdated) {
                     createLog(prospectModel.identification, nameString, lastNameString, telephoneString)
                     showMessage("Prospecto actualizado correctamente")
-                }else{
+                } else {
                     showMessage("Prospecto NO actualizado")
                 }
             }
         }
     }
 
-    private fun updateProspect(name: String, lastName:String, telephone: String){
+    private fun updateProspect(name: String, lastName: String, telephone: String) {
         prospectModel.name = name
         prospectModel.lastName = lastName
         prospectModel.telephone = telephone
@@ -61,15 +61,15 @@ class EditProspectViewModel(private val prospectModel: ProspectModel, context: C
             it[index] = prospectModel
             prospectListLocalStorage.saveList(it)
             true
-        }?:false
+        } ?: false
     }
 
-    private fun createLog(identification: String, name: String, lastName:String, telephone: String){
-        val prospectLogModel = ProspectLogModel(identification, name, lastName, telephone,Calendar.getInstance().time.toString())
+    private fun createLog(identification: String, name: String, lastName: String, telephone: String) {
+        val prospectLogModel = ProspectLogModel(identification, name, lastName, telephone, Calendar.getInstance().time.toString())
         ProspectLogLocalStorage().addItemToList(prospectLogModel)
     }
 
-    private fun clearErrors(){
+    private fun clearErrors() {
         nameError.set("")
         lastNameError.set("")
         telephoneError.set("")

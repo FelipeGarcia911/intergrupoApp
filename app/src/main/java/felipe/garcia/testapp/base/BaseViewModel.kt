@@ -19,7 +19,7 @@ open class BaseViewModel(context: Context) : ViewModel() {
 
     private val showMessage = PublishSubject.create<String>()
 
-    protected fun showMessage(string: String){
+    protected fun showMessage(string: String) {
         showMessage.onNext(string)
     }
 

@@ -25,12 +25,12 @@ class LogFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        context?.let {  viewModel = LogFragmentViewModel(it) }
+        context?.let { viewModel = LogFragmentViewModel(it) }
         subscribe()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater ,R.layout.fragment_log,container , false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_log, container, false)
         binding.viewModel = viewModel
         return binding.root
     }
@@ -48,7 +48,7 @@ class LogFragment : BaseFragment() {
         )
     }
 
-    private fun onLogList(list: ArrayList<ProspectLogModel>){
+    private fun onLogList(list: ArrayList<ProspectLogModel>) {
         adapter.replaceItems(list)
         adapter.notifyDataSetChanged()
         hideSwipeProgressBar()

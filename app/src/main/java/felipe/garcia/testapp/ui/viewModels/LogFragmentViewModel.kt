@@ -8,7 +8,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 
-class LogFragmentViewModel(context: Context): BaseViewModel(context) {
+class LogFragmentViewModel(context: Context) : BaseViewModel(context) {
 
     private var onProspectList = PublishSubject.create<ArrayList<ProspectLogModel>>()
 

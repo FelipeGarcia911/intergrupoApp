@@ -21,9 +21,10 @@ class ProspectLogLocalStorage {
         sharedPreferencesHelper.remove(LOG_LIST_KEY)
     }
 
-    fun addItemToList(prospectLogModel: ProspectLogModel){
+    fun addItemToList(prospectLogModel: ProspectLogModel) {
         var list = getList()
-        list?.add(prospectLogModel) ?:let { list = ArrayList<ProspectLogModel>(); list?.add(prospectLogModel) }
+        list?.add(prospectLogModel)
+                ?: let { list = ArrayList<ProspectLogModel>(); list?.add(prospectLogModel) }
         list?.let { saveList(it) }
     }
 

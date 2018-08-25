@@ -37,7 +37,7 @@ class EditProspectFragment : BaseFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater ,R.layout.fragment_edit_prospect, container , false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_prospect, container, false)
         binding.viewModel = viewModel
         return binding.root
     }
